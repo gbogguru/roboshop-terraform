@@ -104,6 +104,9 @@ module "alb" {
 }
 
 module "apps" {
+
+  depends_on = [module.vpc, module.rabbitmq, module.documentdb, module.elasticache, module.alb, module.rds]
+
   source = "git::https://github.com/gbogguru/tf-module-app.git"
 
   for_each           = var.apps
@@ -121,11 +124,14 @@ module "apps" {
   lb_rule_priority   = each.value["lb_rule_priority"]
   extra_param_access = try(each.value["extra_param_access"], [])
 
-  env            = var.env
-  tags           = var.tags
-  kms_key_id     = var.kms_key_arn
-  allow_ssh_cidr = var.allow_ssh_cidr
-  kms_arn        = var.kms_key_arn
+  env                   = var.env
+  tags                  = var.tags
+  kms_key_id            = var.kms_key_arn
+  allow_ssh_cidr        = var.allow_ssh_cidr
+  kms_arn               = var.kms_key_arn
+  allow_prometheus_cidr = var.allow_prometheus_cidr
 }
+
+
 
 
