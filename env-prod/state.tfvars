@@ -1,3 +1,3 @@
-bucket = "terraform-b73"
+bucket = "terraform-java"
 key    = "prod/terraform.tfstate"
 region = "us-east-1"
